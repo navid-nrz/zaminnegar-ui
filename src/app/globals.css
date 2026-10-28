@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("/fonts/Vazirmatn[wght].woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  line-height: 2;
+}
+
+:root {
+  --primary-color: #020d20;
+}
+
+html {
+  font-family: "Vazirmatn";
+}
+span{
+  display: inline-block;
+}
+
+body {
+  font-family: "Vazirmatn";
+  font-weight: 200 !important;
+  background-color: var(--primary-color);
+  color: #fff;
+}
