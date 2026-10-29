@@ -1,3 +1,4 @@
+import DashboardSidebar from "../components/dashboard/DashboardSidebar";
 import Header from "../components/dashboard/header";
 
 export default function DashboardLayout({
@@ -6,9 +7,13 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className=" min-h-full h-full flex flex-col">
       <Header />
-      <main>{children}</main>
-    </>
+      <div className="grid grid-cols-12 h-[-webkit-fill-available]">
+        <main className="col-span-10 h-full">
+        {children}</main>
+        <DashboardSidebar/>
+        </div>
+    </div>
   );
 }
