@@ -1,4 +1,4 @@
-import DashboardSidebar from "../components/dashboard/DashboardSidebar";
+import DashboardNavigation from "../components/dashboard/DashboardNavigation";
 import Header from "../components/dashboard/header";
 
 export default function DashboardLayout({
@@ -10,10 +10,9 @@ export default function DashboardLayout({
     <div className=" min-h-full h-full flex flex-col">
       <Header />
       <div className="grid grid-cols-12 h-[-webkit-fill-available]">
-        <main className="col-span-10 h-full">
-        {children}</main>
-        <DashboardSidebar/>
-        </div>
+        <main className="col-span-11 h-full">{children}</main>
+        <DashboardNavigation />
+      </div>
     </div>
   );
 }
