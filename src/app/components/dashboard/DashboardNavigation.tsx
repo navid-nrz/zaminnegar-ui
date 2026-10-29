@@ -22,7 +22,7 @@ const navigationItems: NavigationItem[] = [
 export default function DashboardNavigation() {
   const pathName = usePathname();
   return (
-    <aside className="w-full">
+    <aside className="w-full border-s border-slate-200/10">
       <ul className="flex flex-col gap-1.5 w-full p-2 ">
         {navigationItems.map((item, key) => (
           <Link
