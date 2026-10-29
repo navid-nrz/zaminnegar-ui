@@ -1,0 +1,280 @@
+"use client";
+
+export interface Block {
+    code: string,
+    region: string, 
+    parcelCount: number,
+    status: BlockStatus
+}
+
+export type BlockStatus = 'proposed'|'draft'|'final'
+
+import { useMemo } from "react";
+import {
+  useTable,
+  tableFeatures,
+  rowSortingFeature,
+  columnFilteringFeature,
+  rowPaginationFeature,
+  createSortedRowModel,
+  createFilteredRowModel,
+  createPaginatedRowModel,
+  filterFn_includesString,
+  columnVisibilityFeature,
+  sortFns,
+  type ColumnDef,
+} from "@tanstack/react-table";
+
+import {
+  FiEdit2,
+  FiTrash2,
+  FiChevronLeft,
+  FiChevronRight,
+  FiArrowUp,
+  FiArrowDown,
+} from "react-icons/fi";
+
+
+interface BlocksTableProps {
+  data: Block[];
+  searchValue: string;
+  onRowClick: (block: Block) => void;
+  onEdit: (block: Block) => void;
+  onDelete: (block: Block) => void;
+  pageSize?: number;
+}
+
+// TanStack Table v9 features
+const features = tableFeatures({
+  rowSortingFeature,
+  sortedRowModel: createSortedRowModel(),
+  sortFns,
+    columnVisibilityFeature,
+  columnFilteringFeature,
+  filteredRowModel: createFilteredRowModel(),
+  filterFns: {
+    includesString: filterFn_includesString,
+  },
+
+  rowPaginationFeature,
+  paginatedRowModel: createPaginatedRowModel(),
+});
+
+const statusStyles: Record<BlockStatus, string> = {
+  proposed: "bg-gray-100 text-gray-700",
+  draft: "bg-yellow-200 text-yellow-700",
+  final: "bg-green-200 text-green-700",
+};
+
+export default function BlocksTable({
+  data,
+  searchValue,
+  onRowClick,
+  onEdit,
+  onDelete,
+  pageSize = 10,
+}: BlocksTableProps) {
+  const columns = useMemo<ColumnDef<typeof features, Block>[]>(
+    () => [
+      {
+        accessorKey: "code",
+        header: "کد بلوک",
+        sortingFn: "alphanumeric",
+        filterFn: "includesString",
+      },
+      {
+        accessorKey: "region",
+        header: "منطقه",
+      },
+      {
+        accessorKey: "parcelCount",
+        header: "قطعه",
+        sortingFn: "basic",
+      },
+      {
+        accessorKey: "status",
+        header: "وضعیت",
+        cell: ({ row }) => {
+          const status = row.original.status;
+
+          return (
+            <span
+              className={`rounded-full px-3 pt-1 pb-0.5 text-xs font-medium ${statusStyles[status]}`}
+            >
+              {status}
+            </span>
+          );
+        },
+      },
+      {
+        id: "actions",
+        header: "",
+        enableSorting: false,
+        cell: ({ row }) => (
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              aria-label={`Edit ${row.original.code}`}
+              onClick={(event) => {
+                event.stopPropagation();
+                onEdit(row.original);
+              }}
+              className="rounded p-2 text-blue-600 hover:bg-blue-900 transition duration-300"
+            >
+              <FiEdit2 size={17} />
+            </button>
+
+            <button
+              type="button"
+              aria-label={`Delete ${row.original.code}`}
+              onClick={(event) => {
+                event.stopPropagation();
+                onDelete(row.original);
+              }}
+              className="rounded p-2 text-red-600 hover:bg-red-900 transition duration-300"
+            >
+              <FiTrash2 size={17} />
+            </button>
+          </div>
+        ),
+      },
+    ],
+    [onEdit, onDelete]
+  );
+
+  const columnFilters = useMemo(
+    () =>
+      searchValue.trim() ? [{ id: "code", value: searchValue.trim() }] : [],
+    [searchValue]
+  );
+
+  const table = useTable({
+    features,
+    data,
+    columns,
+    state: {
+      columnFilters,
+    },
+    initialState: {
+      pagination: {
+        pageIndex: 0,
+        pageSize,
+      },
+    },
+    getRowId: (row) => row.code,
+  });
+
+  const rows = table.getRowModel().rows;
+  const pageCount = table.getPageCount();
+
+  return (
+    <div className="w-full space-y-4">
+      <div className="overflow-x-auto rounded-lg border border-slate-200/10">
+        <table className="w-full text-left text-sm">
+          <thead className="bg-slate-200/10">
+            {table.getHeaderGroups().map((group) => (
+              <tr key={group.id}>
+                {group.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    scope="col"
+                    className="px-4 py-3 font-semibold"
+                  >
+                    {header.isPlaceholder ? null : (
+                      <button
+                        type="button"
+                        disabled={!header.column.getCanSort()}
+                        onClick={header.column.getToggleSortingHandler()}
+                        className="flex items-center gap-2 disabled:cursor-default"
+                      >
+                        <table.FlexRender header={header} />
+
+                        {header.column.getCanSort() &&
+                          (header.column.getIsSorted() === "asc" ? (
+                            <FiArrowUp />
+                          ) : header.column.getIsSorted() === "desc" ? (
+                            <FiArrowDown />
+                          ) : null)}
+                      </button>
+                    )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+
+          <tbody>
+            {rows.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={columns.length}
+                  className="px-4 py-10 text-center text-gray-500"
+                >
+                  No blocks found.
+                </td>
+              </tr>
+            ) : (
+              rows.map((row) => (
+                <tr
+                  key={row.id}
+                  onClick={() => onRowClick(row.original)}
+                  onKeyDown={(event) => {
+                    if (
+                      event.target === event.currentTarget &&
+                      (event.key === "Enter" || event.key === " ")
+                    ) {
+                      event.preventDefault();
+                      onRowClick(row.original);
+                    }
+                  }}
+                  tabIndex={0}
+                  aria-label={`Open block ${row.original.code}`}
+                  className="cursor-pointer border-t border-slate-200/10 hover:bg-slate-800 odd:bg-slate-950 focus-visible:outline-2 focus-visible:outline-blue-500"
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id} className="px-4 py-3 text-right">
+                      <table.FlexRender cell={cell} />
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="flex items-center justify-between gap-4">
+        <span className="text-sm text-gray-500">
+          {table.getFilteredRowModel().rows.length} بلوک
+        </span>
+
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            aria-label="Previous page"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+            className="rounded bg-blue-600 p-2 disabled:opacity-40 cursor-pointer"
+          >
+            <FiChevronRight />
+          </button>
+
+          <span className="text-sm">
+            صفحه {table.state.pagination.pageIndex + 1} از{" "}
+            {Math.max(1, pageCount)}
+          </span>
+
+          <button
+            type="button"
+            aria-label="Next page"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+            className="rounded bg-blue-600 p-2 disabled:opacity-40 cursor-pointer"
+          >
+            <FiChevronLeft />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
