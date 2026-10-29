@@ -7,12 +7,12 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className=" min-h-full h-full flex flex-col">
+    <div className="max-h-svh h-full grid grid-rows-[auto_1fr] grid-cols-12">
+      <div className="col-span-12">
       <Header />
-      <div className="grid grid-cols-12 h-[-webkit-fill-available]">
-        <main className="col-span-11 h-full">{children}</main>
-        <DashboardNavigation />
       </div>
+        <main className="col-span-11 h-full overflow-y-auto">{children}</main>
+        <DashboardNavigation />
     </div>
   );
 }

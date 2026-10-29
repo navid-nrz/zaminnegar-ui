@@ -22,10 +22,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="fa"
       dir="rtl"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`"h-svh ${geistSans.variable} ${geistMono.variable} h-full antialiased `}
     >
-      <body className="min-h-svh h-full">
-        {children}</body>
+      <body className="h-svh ">{children}</body>
     </html>
   );
 }
