@@ -1,19 +1,23 @@
 "use client";
 
-export interface Block {
-    code: string,
-    region: string, 
-    parcelCount: number,
-    status: BlockStatus
+export enum BlockStatus {
+  PROPOSED = "proposed",
+  DRAFT = "draft",
+  FINAL = "final",
 }
 
-export type BlockStatus = 'proposed'|'draft'|'final'
+export const BlockStatusMap: Record<BlockStatus, string> = {
+  [BlockStatus.PROPOSED]: "پیشنهادیه",
+  [BlockStatus.DRAFT]: "پیش‌نویس",
+  [BlockStatus.FINAL]: "نهایی",
+};
 
-export const BlockStatusMap = new Map<BlockStatus, string>([
-  ["proposed", "پیشنهادیه"],
-  ["draft", "پیشنویس"],
-  ["final", "نهایی"],
-]);
+export interface Block {
+  code: string;
+  region: string;
+  parcelCount: number;
+  status: BlockStatus;
+}
 
 import { useMemo } from "react";
 import {
@@ -97,9 +101,9 @@ export default function BlocksTable({
         accessorKey: "parcelCount",
         header: "قطعه",
         sortingFn: "basic",
-        cell({row}) {
+        cell({ row }) {
           const parcelCount = row.original.parcelCount;
-          return toPersianNumber(parcelCount)
+          return toPersianNumber(parcelCount);
         },
       },
       {
@@ -112,7 +116,7 @@ export default function BlocksTable({
             <span
               className={`min-w-18 text-center rounded-full px-3 pt-1 pb-0.5 text-xs font-medium ${statusStyles[status]}`}
             >
-              {BlockStatusMap.get(status)}
+              {BlockStatusMap[status]}
             </span>
           );
         },
@@ -130,7 +134,7 @@ export default function BlocksTable({
                 event.stopPropagation();
                 onEdit(row.original);
               }}
-              className="rounded p-2 text-blue-600 hover:bg-blue-900 transition duration-300"
+              className="rounded p-2 text-blue-600 hover:bg-blue-900 transition duration-300 cursor-pointer"
             >
               <FiEdit2 size={17} />
             </button>
@@ -142,7 +146,7 @@ export default function BlocksTable({
                 event.stopPropagation();
                 onDelete(row.original);
               }}
-              className="rounded p-2 text-red-600 hover:bg-red-900 transition duration-300"
+              className="rounded p-2 text-red-600 hover:bg-red-900 transition duration-300 cursor-pointer"
             >
               <FiTrash2 size={17} />
             </button>
@@ -189,7 +193,7 @@ export default function BlocksTable({
                   <th
                     key={header.id}
                     scope="col"
-                    className="px-4 py-3 font-semibold"
+                    className="px-4 py-3 font-light"
                   >
                     {header.isPlaceholder ? null : (
                       <button
@@ -240,7 +244,7 @@ export default function BlocksTable({
                   }}
                   tabIndex={0}
                   aria-label={`Open block ${row.original.code}`}
-                  className="cursor-pointer border-t border-slate-200/10 hover:bg-slate-800 odd:bg-slate-950 focus-visible:outline-2 focus-visible:outline-blue-500"
+                  className="cursor-pointer border-t border-slate-200/10 hover:bg-slate-800 odd:bg-slate-950 focus-visible:outline-2 focus-visible:outline-blue-500 transition duration-300"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td key={cell.id} className="px-4 py-3 text-right">
@@ -265,7 +269,7 @@ export default function BlocksTable({
             aria-label="Previous page"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
-            className="rounded bg-blue-600 p-2 disabled:opacity-40 cursor-pointer"
+            className="rounded bg-blue-500 hover:bg-blue-600 p-2 disabled:opacity-40 cursor-pointer transition duration-300"
           >
             <FiChevronRight />
           </button>
@@ -280,7 +284,7 @@ export default function BlocksTable({
             aria-label="Next page"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
-            className="rounded bg-blue-600 p-2 disabled:opacity-40 cursor-pointer"
+            className="rounded bg-blue-500 hover:bg-blue-600 p-2 disabled:opacity-40 cursor-pointer transition duration-300"
           >
             <FiChevronLeft />
           </button>
