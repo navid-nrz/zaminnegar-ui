@@ -3,17 +3,17 @@ import { IBlock } from "@/app/features/blocks/interface";
 import { IOwner } from "@/app/features/owners/interface";
 import { IParcel } from "@/app/features/parcels/interface";
 import { IRegion } from "@/app/features/regions/interface";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GoChevronDown } from "react-icons/go";
 export default function LayerManagement() {
   const [isOpen, setIsOpen] = useState({
-    region: false,
-    blocks: false,
-    parcels: false,
-    owners: false,
+    region: true,
+    blocks: true,
+    parcels: true,
+    owners: true,
   });
   return (
-    <aside className="p-3">
+    <aside className="py-3 pl-2 pr-3">
       <h3 className="border-b border-slate-200/10 text-xs pb-2 block">
         مدیریت لایه ها
       </h3>
@@ -49,6 +49,7 @@ export default function LayerManagement() {
                   ],
                 ],
               },
+              areaM2: "1254000",
               createdAt: new Date("2026-01-15T08:30:00Z"),
               updatedAt: new Date("2026-03-20T14:45:00Z"),
               blocks: [],
@@ -56,6 +57,7 @@ export default function LayerManagement() {
           ]}
           label="مناطق"
           onChange={(region, chk) => {}}
+          defaultOpen={isOpen.region}
         />
         <Layer<IBlock>
           color="#2b7fff"
@@ -79,6 +81,7 @@ export default function LayerManagement() {
                   ],
                 ],
               },
+              areaM2: "1854000",
               createdAt: new Date("2026-01-16"),
               updatedAt: new Date("2026-02-10"),
               parcels: [],
@@ -102,6 +105,7 @@ export default function LayerManagement() {
                   ],
                 ],
               },
+              areaM2: "1854000",
               createdAt: new Date("2026-01-17"),
               updatedAt: new Date("2026-02-15"),
               parcels: [],
@@ -125,6 +129,7 @@ export default function LayerManagement() {
                   ],
                 ],
               },
+              areaM2: "1854000",
               createdAt: new Date("2026-02-01"),
               updatedAt: new Date("2026-04-12"),
               parcels: [],
@@ -132,6 +137,7 @@ export default function LayerManagement() {
           ]}
           label="بلوک‌ها"
           onChange={(block, chk) => {}}
+          defaultOpen={isOpen.blocks}
         />
         <Layer<IParcel>
           color="#ffce0a"
@@ -160,7 +166,7 @@ export default function LayerManagement() {
               strokeColor: "#15803d",
               strokeWidth: 2,
               notes: "زمین شالیزاری با کشت برنج",
-              areaM2: 8500,
+              areaM2: "8500",
               createdAt: new Date("2026-01-20"),
               updatedAt: new Date("2026-02-15"),
               owners: [],
@@ -189,7 +195,7 @@ export default function LayerManagement() {
               strokeColor: "#1d4ed8",
               strokeWidth: 2,
               notes: "زمین کشاورزی در بخش شمالی بلوک",
-              areaM2: 9200,
+              areaM2: "9200",
               createdAt: new Date("2026-01-22"),
               updatedAt: new Date("2026-02-18"),
               owners: [],
@@ -218,7 +224,7 @@ export default function LayerManagement() {
               strokeColor: "#b45309",
               strokeWidth: 2,
               notes: "قطعه دارای سیستم آبیاری مستقل",
-              areaM2: 7800,
+              areaM2: "7800",
               createdAt: new Date("2026-02-01"),
               updatedAt: new Date("2026-03-10"),
               owners: [],
@@ -247,7 +253,7 @@ export default function LayerManagement() {
               strokeColor: "#7e22ce",
               strokeWidth: 2,
               notes: null,
-              areaM2: 9800,
+              areaM2: "9800",
               createdAt: new Date("2026-02-10"),
               updatedAt: new Date("2026-03-15"),
               owners: [],
@@ -255,6 +261,7 @@ export default function LayerManagement() {
           ]}
           label="قطعه‌ها"
           onChange={(parcel, chk) => {}}
+          defaultOpen={isOpen.parcels}
         />
         <Layer<IOwner>
           color="#5e00d9"
@@ -302,6 +309,7 @@ export default function LayerManagement() {
           ]}
           label="مالکین"
           onChange={(owner, chk) => {}}
+          defaultOpen={isOpen.owners}
         />
       </div>
     </aside>
@@ -309,6 +317,7 @@ export default function LayerManagement() {
 }
 
 interface LayerProps<T> {
+  defaultOpen?: boolean;
   onChange(layerData: T, checked: boolean): void;
   color: string;
   label: string;
@@ -316,25 +325,28 @@ interface LayerProps<T> {
 }
 
 function Layer<T extends { name: string }>(props: LayerProps<T>) {
-  const [isOpen, setOpen] = useState<boolean>(false);
+  const [isClose, setClose] = useState<boolean>(
+    props.defaultOpen !== undefined ? !props.defaultOpen : false,
+  );
+
   return (
     <div
-      className={`feature_items_wrap relative h-fit ${isOpen ? "overflow-visible" : "overflow-hidden"} border-b border-slate-200/10 cursor-pointer`}
+      className={`feature_items_wrap relative h-fit ${isClose ? "overflow-visible" : "overflow-hidden"} border-b border-slate-200/10 cursor-pointer`}
     >
       <div
         className="title_feature flex items-center justify-end py-3 gap-2 relative"
-        onClick={() => setOpen((prev) => !prev)}
+        onClick={() => setClose((prev) => !prev)}
       >
         <GoChevronDown
           className={`absolute right-1.5 transition-transform duration-300 ${
-            isOpen ? "rotate-180" : ""
+            isClose ? "rotate-180" : ""
           }`}
         />
         <h4 className="text-xs font-medium">{props.label}</h4>
         <PolygonIcon fillColor={props.color} />
       </div>
       <div
-        className={`${isOpen ? "absolute opacity-0 invisible" : "opacity-100 visible"} w-full flex flex-col gap-3 mb-3 pr-1`}
+        className={`${isClose ? "absolute opacity-0 invisible" : "opacity-100 visible"} w-full flex flex-col gap-3 mb-3 pr-1`}
       >
         {props.data.map((item, key) => (
           <label
