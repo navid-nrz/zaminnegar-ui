@@ -8,6 +8,7 @@ export interface IBlock {
   name: string;
   description: string;
   territory: IMultiPolygon;
+  areaM2: string;
   createdAt: Date;
   updatedAt: Date;
   region?: IRegion;

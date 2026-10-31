@@ -14,7 +14,7 @@ export interface IParcel {
   strokeWidth: number;
   notes: string | null;
   /** Geodesic area in square meters, computed by PostGIS (`ST_Area(geom::geography)`). */
-  areaM2: number;
+  areaM2: string;
   createdAt: Date;
   updatedAt: Date;
   block?: IBlock;
@@ -25,6 +25,6 @@ export type Position = [longitude: number, latitude: number];
 
 /** A GeoJSON MultiPolygon: polygons → rings → positions. Rings are closed (first == last). */
 export interface IMultiPolygon {
-  type: 'MultiPolygon';
+  type: "MultiPolygon";
   coordinates: Position[][][];
 }
