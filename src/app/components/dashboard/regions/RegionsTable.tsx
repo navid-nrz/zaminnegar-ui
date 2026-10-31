@@ -27,6 +27,7 @@ import {
 import type { IRegion } from "@/app/features/regions/interface";
 import { toPersianNumber } from "@/app/util";
 import { SvgPolygon } from "../SvgMultiPolygon";
+import Link from "next/link";
 
 export enum RegionStatus {
   ACTIVE = "active",
@@ -80,23 +81,31 @@ export default function RegionsTable({
 }: RegionsTableProps) {
   const columns = useMemo<ColumnDef<typeof features, Region>[]>(
     () => [
-        createColumnHelper<typeof features, Region>().group({
-          id: "name", 
-          // header: "نام منطقه",
-          columns: [{
+      {
         accessorKey: "id",
-        header: "",
-        cell({row}) {
-          return <SvgPolygon height="3rem" multiPolygon={row.original.territory} />
+        header: "نام منطقه",
+        cell({ row }) {
+          return (
+            <SvgPolygon height="3rem" multiPolygon={row.original.territory} />
+          );
         },
       },
       {
-        accessorKey: "name",        header: "",
-        // sortingFn: "alphanumeric",
+        accessorKey: "name",
+        header: "",
+        sortingFn: "alphanumeric",
         filterFn: "includesString",
-      },]
-        }),
-      
+        cell({ row }) {
+          return (
+            <Link
+              className="w-full inline-block h-full text-blue-400 hover:underline underline-offset-4"
+              href={{ pathname: `/regions/${row.original.id}` }}
+            >
+              {row.original.name}
+            </Link>
+          );
+        },
+      },
       {
         accessorKey: "areaM2",
         header: "مساحت",
@@ -150,7 +159,7 @@ export default function RegionsTable({
                 event.stopPropagation();
                 onEdit(row.original);
               }}
-              className="rounded p-2 text-blue-600 hover:bg-blue-900 transition duration-300"
+              className="isolate cursor-pointer rounded p-2 text-blue-600 hover:bg-blue-900 transition duration-300"
             >
               <FiEdit2 size={17} />
             </button>
@@ -162,7 +171,7 @@ export default function RegionsTable({
                 event.stopPropagation();
                 onDelete(row.original);
               }}
-              className="rounded p-2 text-red-600 hover:bg-red-900 transition duration-300"
+              className="isolate cursor-pointer rounded p-2 text-red-600 hover:bg-red-900 transition duration-300"
             >
               <FiTrash2 size={17} />
             </button>
@@ -260,7 +269,7 @@ export default function RegionsTable({
                   }}
                   tabIndex={0}
                   aria-label={`Open block ${row.original.name}`}
-                  className="cursor-pointer border-t border-slate-200/10 hover:bg-slate-800 odd:bg-slate-950 focus-visible:outline-2 focus-visible:outline-blue-500"
+                  className="border-t border-slate-200/10 hover:bg-slate-800 odd:bg-slate-950 focus-visible:outline-2 focus-visible:outline-blue-500"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td key={cell.id} className="px-4 py-3 text-right">
