@@ -5,187 +5,8 @@ import { useState } from "react";
 import Modal from "@/app/components/dashboard/blocks/BlocksPopupAddBlock";
 import { IoChevronDown } from "react-icons/io5";
 import { BlockStatus, BlockStatusMap, type Block } from "@/app/components/dashboard/blocks/BlocksTable";
-
-
-export const mockBlocks: Block[] = [
-  {
-    code: "BLK-030",
-    region: "مرکز",
-    parcelCount: 26,
-    status: BlockStatus.FINAL,
-  },
-  {
-    code: "BLK-029",
-    region: "غرب",
-    parcelCount: 39,
-    status: BlockStatus.DRAFT,
-  },
-  {
-    code: "BLK-028",
-    region: "شرق",
-    parcelCount: 13,
-    status: BlockStatus.PROPOSED,
-  },
-  {
-    code: "BLK-027",
-    region: "جنوب",
-    parcelCount: 47,
-    status: BlockStatus.FINAL,
-  },
-  {
-    code: "BLK-026",
-    region: "شمال",
-    parcelCount: 22,
-    status: BlockStatus.DRAFT,
-  },
-  {
-    code: "BLK-025",
-    region: "مرکز",
-    parcelCount: 34,
-    status: BlockStatus.PROPOSED,
-  },
-  { code: "BLK-024", region: "غرب", parcelCount: 9, status: BlockStatus.FINAL },
-  {
-    code: "BLK-023",
-    region: "شرق",
-    parcelCount: 55,
-    status: BlockStatus.DRAFT,
-  },
-  {
-    code: "BLK-022",
-    region: "جنوب",
-    parcelCount: 18,
-    status: BlockStatus.PROPOSED,
-  },
-  {
-    code: "BLK-021",
-    region: "شمال",
-    parcelCount: 43,
-    status: BlockStatus.FINAL,
-  },
-
-  {
-    code: "BLK-020",
-    region: "مرکز",
-    parcelCount: 29,
-    status: BlockStatus.DRAFT,
-  },
-  {
-    code: "BLK-019",
-    region: "غرب",
-    parcelCount: 4,
-    status: BlockStatus.PROPOSED,
-  },
-  {
-    code: "BLK-018",
-    region: "شرق",
-    parcelCount: 36,
-    status: BlockStatus.FINAL,
-  },
-  {
-    code: "BLK-017",
-    region: "جنوب",
-    parcelCount: 11,
-    status: BlockStatus.DRAFT,
-  },
-  {
-    code: "BLK-016",
-    region: "شمال",
-    parcelCount: 49,
-    status: BlockStatus.PROPOSED,
-  },
-  {
-    code: "BLK-015",
-    region: "مرکز",
-    parcelCount: 21,
-    status: BlockStatus.FINAL,
-  },
-  {
-    code: "BLK-014",
-    region: "غرب",
-    parcelCount: 33,
-    status: BlockStatus.DRAFT,
-  },
-  {
-    code: "BLK-013",
-    region: "شرق",
-    parcelCount: 15,
-    status: BlockStatus.PROPOSED,
-  },
-  {
-    code: "BLK-012",
-    region: "جنوب",
-    parcelCount: 41,
-    status: BlockStatus.FINAL,
-  },
-  {
-    code: "BLK-011",
-    region: "شمال",
-    parcelCount: 27,
-    status: BlockStatus.DRAFT,
-  },
-
-  {
-    code: "BLK-010",
-    region: "مرکز",
-    parcelCount: 6,
-    status: BlockStatus.PROPOSED,
-  },
-  {
-    code: "BLK-009",
-    region: "غرب",
-    parcelCount: 52,
-    status: BlockStatus.FINAL,
-  },
-  {
-    code: "BLK-008",
-    region: "شرق",
-    parcelCount: 19,
-    status: BlockStatus.DRAFT,
-  },
-  {
-    code: "BLK-007",
-    region: "جنوب",
-    parcelCount: 31,
-    status: BlockStatus.FINAL,
-  },
-  {
-    code: "BLK-006",
-    region: "شمال",
-    parcelCount: 8,
-    status: BlockStatus.PROPOSED,
-  },
-  {
-    code: "BLK-005",
-    region: "مرکز",
-    parcelCount: 45,
-    status: BlockStatus.DRAFT,
-  },
-  {
-    code: "BLK-004",
-    region: "غرب",
-    parcelCount: 17,
-    status: BlockStatus.FINAL,
-  },
-  {
-    code: "BLK-003",
-    region: "شرق",
-    parcelCount: 38,
-    status: BlockStatus.PROPOSED,
-  },
-  {
-    code: "BLK-002",
-    region: "جنوب",
-    parcelCount: 12,
-    status: BlockStatus.DRAFT,
-  },
-  {
-    code: "BLK-001",
-    region: "شمال",
-    parcelCount: 24,
-    status: BlockStatus.FINAL,
-  },
-];
+import { useRouter } from "next/navigation";
+import { mockBlocks } from "@/app/(dashboard)/blocks";
 
 
 export default function BlockPage() {
@@ -198,6 +19,7 @@ export default function BlockPage() {
   const [valueStatus, setValueStatus] = useState<BlockStatus | "">("");
   const [alt , setAlt] = useState('')
   const [selectedBlock, setSelectedBlock] = useState<Block | null>(null);
+  const router = useRouter();
 
   const handleAddBlock = () => {
     if (!nameBlock.trim() || !nameRegion || !valueStatus) {
@@ -332,8 +154,10 @@ console.log("New Block:", blocks);
           data={blocks}
           onDelete={handleDelete}
           onEdit={handleEditBlock}
-          onRowClick={console.log}
           searchValue={searchValue}
+          onRowClick={(block) => {
+            router.push(`/blocks/${encodeURIComponent(block.code)}`);
+          }}
         />
       </div>
 
