@@ -15,7 +15,7 @@ export default function header() {
           <span>{userName}</span>
         </div>
       </nav>
-      <nav className="middle_nav">
+      <nav className="middle_nav flex items-center justify-center">
         <form className="flex w-full max-w-sm items-center gap-2">
           <label htmlFor="simple-search" className="sr-only">
             جستجو
