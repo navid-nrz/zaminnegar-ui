@@ -4,11 +4,11 @@ export const instant = false;
 export default function MapPage() {
   return (
     <div className="grid grid-cols-12 h-full">
-      <div className="details_layer col-span-3 h-full overflow-y-auto scrollbar-gutter-stable border-e border-slate-200/10">
+      <div className="col-span-3 h-full overflow-y-auto scrollbar-gutter-stable border-e border-slate-200/10">
         <DetailsLayer/>
       </div>
       <div className="col-span-7 h-full border-e border-slate-200/10"></div>
-      <div className="layer_management col-span-2 h-full overflow-y-auto scrollbar-gutter-stable">
+      <div className="col-span-2 h-full overflow-y-auto scrollbar-gutter-stable">
         <LayerManagement/>
       </div>
     </div>

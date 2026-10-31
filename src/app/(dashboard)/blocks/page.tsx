@@ -267,7 +267,7 @@ console.log("New Block:", blocks);
     );
   };
   return (
-    <div className="w-full h-full overflow-y-auto blooks_page_scrollbar">
+    <div className="w-full h-full overflow-y-auto">
       <div className="w-full max-w-4xl mx-auto flex flex-col gap-2 items-center pb-4 pt-6 pr-4">
         <h2 className="w-full text-right text-3xl leading-loose font-extralight">
           بلوک ها

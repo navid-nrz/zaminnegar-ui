@@ -143,22 +143,17 @@ body {
 .delete:hover::after {
   transform: translateY(0);
 }
-.layer_management::-webkit-scrollbar ,
-.details_layer::-webkit-scrollbar ,
-.blooks_page_scrollbar::-webkit-scrollbar {
-  width: 5px;
-  background-color: #e8e8e811;
+
+*::-webkit-scrollbar{
+    width: 5px;
+  background-color: transparent;
 }
 
-.layer_management::-webkit-scrollbar-track ,
-.details_layer::-webkit-scrollbar-track ,
-.blooks_page_scrollbar::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track{
   background: transparent;
 }
 
-.layer_management::-webkit-scrollbar-thumb ,
-.details_layer::-webkit-scrollbar-thumb ,
-.blooks_page_scrollbar::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb{
   background-color: #005e9d;
   border-radius: 10px;
 }
