@@ -2,7 +2,7 @@
 import { AiOutlinePlus } from "react-icons/ai";
 import BlocksTable from "@/app/components/dashboard/blocks/BlocksTable";
 import { useState } from "react";
-import Modal from "@/app/components/dashboard/blocks/BlocksPopupAddBlock";
+import { Dialog } from "@/app/components/Dialog";
 import { IoChevronDown } from "react-icons/io5";
 import { BlockStatus, BlockStatusMap, type Block } from "@/app/components/dashboard/blocks/BlocksTable";
 import { useRouter } from "next/navigation";
@@ -90,11 +90,11 @@ console.log("New Block:", blocks);
   };
   return (
     <div className="w-full h-full overflow-y-auto">
-      <div className="w-full max-w-4xl mx-auto flex flex-col gap-2 items-center pb-4 pt-6 pr-4">
+      <div className="w-full max-w-4xl mx-auto flex flex-col gap-4 items-center pb-4 pt-6 pr-4">
         <h2 className="w-full text-right text-3xl leading-loose font-extralight">
           بلوک ها
         </h2>
-        <div className="block-header w-full flex gap-2 justify-between items-center">
+        <div className="block-header w-full flex gap-4 justify-between items-center">
           <form
             onSubmit={(e) => e.preventDefault()}
             className="flex w-full items-center gap-2 rounded-lg border border-slate-200/10 bg-[#504e4e52]"
@@ -107,7 +107,7 @@ console.log("New Block:", blocks);
               <input
                 type="search"
                 id="simple-search"
-                placeholder="جستجوی منطقه یا بلوک..."
+                placeholder="جستجوی بلوک..."
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
                 className="block w-full py-2.5 px-3 text-sm text-slate-200 outline-none transition placeholder:text-slate-300"
@@ -161,11 +161,17 @@ console.log("New Block:", blocks);
         />
       </div>
 
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <h2 className="text-xl text-white mb-4">
-          {selectedBlock ? "ویرایش بلوک" : "افزودن بلوک جدید"}
-        </h2>
-
+      <Dialog
+        open={isOpen}
+        onOpenChange={setIsOpen}
+        title={selectedBlock ? "ویرایش بلوک" : "افزودن بلوک جدید"}
+        description={
+          selectedBlock
+            ? "اطلاعات بلوک انتخاب‌شده را ویرایش کنید."
+            : "اطلاعات بلوک جدید را وارد کنید."
+        }
+        className="text-white"
+      >
         <form
           onSubmit={(e) => e.preventDefault()}
           className="flex flex-col gap-4"
@@ -224,7 +230,7 @@ console.log("New Block:", blocks);
         >
           {selectedBlock ? "ذخیره تغییرات" : "ثبت بلوک"}
         </button>
-      </Modal>
+      </Dialog>
     </div>
   );
 }
