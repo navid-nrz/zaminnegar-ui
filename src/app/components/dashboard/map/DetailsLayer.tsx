@@ -6,11 +6,23 @@ import { GoChevronDown, GoChevronRight } from "react-icons/go";
 import { CiGrid42 } from "react-icons/ci";
 import { useState } from "react";
 
+const owners = [
+  { id: 1, name: "علی صادقی", count: 5 },
+  { id: 2, name: "مهران مدیری", count: 3 },
+  { id: 3, name: "جواد سیدی", count: 8 },
+  { id: 4, name: "مهدی لطفی", count: 2 },
+];
+
+
 export default function DetailsLayer() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const filteredOwners = owners.filter((owner) =>
+    owner.name.toLowerCase().includes(searchValue.trim().toLowerCase())
+  );
+  
   return (
-    <aside className="h-full min-h-0 min-w-0 flex-1 p-3 overflow-y-auto">
+    <aside className="h-full min-h-0 min-w-0 flex-1 py-3 pl-2 pr-3 ">
       <h3 className="border-b border-slate-200/10 text-xs pb-2 block">
         مدیریت لایه ها
       </h3>
@@ -147,7 +159,7 @@ export default function DetailsLayer() {
               <input
                 type="search"
                 id="simple-search"
-                placeholder="جستجوی منطقه یا بلوک..."
+                placeholder="جستجوی نام مالکان ..."
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
                 className="block w-full py-1.5 px-3 text-xs text-slate-200 outline-none transition placeholder:text-slate-300"
@@ -178,34 +190,19 @@ export default function DetailsLayer() {
           </form>
         </div>
         <div className="owners_wrapper mt-3 flex flex-col">
-          <div className="owner_item flex items-center py-3 border-b border-slate-200/10 justify-between px-1">
-            <div className="name_and_circle flex items-center gap-2">
-              <span className="circle w-2 h-2 rounded-full bg-[#5e00d9]"></span>
-              <span className="text-xs">علی صادقی</span>
+          {filteredOwners.map((owner) => (
+            <div
+              key={owner.id}
+              className="owner_item flex items-center py-3 border-b last:border-b-0 border-slate-200/10 justify-between px-1"
+            >
+              <div className="name_and_circle flex items-center gap-2">
+                <span className="circle w-2 h-2 rounded-full bg-[#5e00d9]"></span>
+                <span className="text-xs">{owner.name}</span>
+              </div>
+
+              <span className="text-xs text-slate-400">{owner.count} قطعه</span>
             </div>
-            <span className="text-xs text-slate-400">5قطعه</span>
-          </div>
-          <div className="owner_item flex items-center py-3 border-b border-slate-200/10 justify-between px-1">
-            <div className="name_and_circle flex items-center gap-2">
-              <span className="circle w-2 h-2 rounded-full bg-[#5e00d9]"></span>
-              <span className="text-xs">مهران مدیری</span>
-            </div>
-            <span className="text-xs text-slate-400">5قطعه</span>
-          </div>
-          <div className="owner_item flex items-center py-3 border-b border-slate-200/10 justify-between px-1">
-            <div className="name_and_circle flex items-center gap-2">
-              <span className="circle w-2 h-2 rounded-full bg-[#5e00d9]"></span>
-              <span className="text-xs">جواد سیدی</span>
-            </div>
-            <span className="text-xs text-slate-400">5قطعه</span>
-          </div>
-          <div className="owner_item flex items-center py-2 justify-between px-1">
-            <div className="name_and_circle flex items-center gap-2">
-              <span className="circle w-2 h-2 rounded-full bg-[#5e00d9]"></span>
-              <span className="text-xs">مهدی لطفی</span>
-            </div>
-            <span className="text-xs text-slate-400">5قطعه</span>
-          </div>
+          ))}
         </div>
       </div>
     </aside>
