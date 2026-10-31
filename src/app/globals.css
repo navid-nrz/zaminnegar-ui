@@ -26,3 +26,102 @@ body {
   background-color: var(--primary-color);
   color: #fff;
 }
+
+
+/* =========================================
+   Dialog animations
+   ========================================= */
+
+.ui-dialog {
+  opacity: 0;
+  transform: translateY(1rem) scale(0.98);
+
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease,
+    display 200ms allow-discrete,
+    overlay 200ms allow-discrete;
+}
+
+.ui-dialog[open] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Entry animation */
+@starting-style {
+  .ui-dialog[open] {
+    opacity: 0;
+    transform: translateY(1rem) scale(0.98);
+  }
+}
+
+/* Backdrop animation */
+.ui-dialog::backdrop {
+  background-color: rgb(0 0 0 / 0%);
+  backdrop-filter: blur(0);
+
+  transition:
+    background-color 200ms ease,
+    backdrop-filter 200ms ease,
+    display 200ms allow-discrete,
+    overlay 200ms allow-discrete;
+}
+
+.ui-dialog[open]::backdrop {
+  background-color: rgb(0 0 0 / 50%);
+  backdrop-filter: blur(4px);
+}
+
+@starting-style {
+  .ui-dialog[open]::backdrop {
+    background-color: rgb(0 0 0 / 0%);
+    backdrop-filter: blur(0);
+  }
+}
+
+/* Desktop dialog */
+@media (min-width: 640px) {
+  .ui-dialog {
+    transform: translateY(0.5rem) scale(0.96);
+  }
+
+  @starting-style {
+    .ui-dialog[open] {
+      transform: translateY(0.5rem) scale(0.96);
+    }
+  }
+}
+
+
+/* =========================================
+   Reduced motion accessibility
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-dialog,
+  .ui-dialog::backdrop {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .ui-dialog {
+    transform: none;
+  }
+}
+
+@media (max-width: 639px) {
+  .ui-dialog {
+    transform: translateY(100%);
+  }
+
+  .ui-dialog[open] {
+    transform: translateY(0);
+  }
+
+  @starting-style {
+    .ui-dialog[open] {
+      transform: translateY(100%);
+    }
+  }
+}

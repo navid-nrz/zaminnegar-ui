@@ -89,7 +89,7 @@ export interface DialogProps {
  * - Native focus restoration.
  * - Mobile bottom-sheet layout.
  * - Accessible title and description.
- *
+ *  
  * @example
  * ```tsx
  * <Dialog
