@@ -24,7 +24,7 @@ export default function DetailsLayer() {
   return (
     <aside className="h-full min-h-0 min-w-0 flex-1 py-3 pl-2 pr-3 ">
       <h3 className="border-b border-slate-200/10 text-xs pb-2 block">
-        مدیریت لایه ها
+        جزئیات منطقه
       </h3>
       <div className="details_polygon relative">
         <div className="abs-plyg absolute top-0.5 left-0 w-30 h-30 rounded-xl bg-blue-500/10 backdrop-blur-lg border border-slate-200/10"></div>
