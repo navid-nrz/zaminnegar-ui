@@ -9,6 +9,12 @@ export interface Block {
 
 export type BlockStatus = 'proposed'|'draft'|'final'
 
+export const BlockStatusMap = new Map<BlockStatus, string>([
+  ["proposed", "پیشنهادیه"],
+  ["draft", "پیشنویس"],
+  ["final", "نهایی"],
+]);
+
 import { useMemo } from "react";
 import {
   useTable,
@@ -33,6 +39,7 @@ import {
   FiArrowUp,
   FiArrowDown,
 } from "react-icons/fi";
+import { toPersianNumber } from "@/app/util";
 
 
 interface BlocksTableProps {
@@ -90,6 +97,10 @@ export default function BlocksTable({
         accessorKey: "parcelCount",
         header: "قطعه",
         sortingFn: "basic",
+        cell({row}) {
+          const parcelCount = row.original.parcelCount;
+          return toPersianNumber(parcelCount)
+        },
       },
       {
         accessorKey: "status",
@@ -99,9 +110,9 @@ export default function BlocksTable({
 
           return (
             <span
-              className={`rounded-full px-3 pt-1 pb-0.5 text-xs font-medium ${statusStyles[status]}`}
+              className={`min-w-18 text-center rounded-full px-3 pt-1 pb-0.5 text-xs font-medium ${statusStyles[status]}`}
             >
-              {status}
+              {BlockStatusMap.get(status)}
             </span>
           );
         },
@@ -210,7 +221,7 @@ export default function BlocksTable({
                   colSpan={columns.length}
                   className="px-4 py-10 text-center text-gray-500"
                 >
-                  No blocks found.
+                  بلوکی یافت نشد
                 </td>
               </tr>
             ) : (
@@ -245,7 +256,7 @@ export default function BlocksTable({
 
       <div className="flex items-center justify-between gap-4">
         <span className="text-sm text-gray-500">
-          {table.getFilteredRowModel().rows.length} بلوک
+          {toPersianNumber(table.getFilteredRowModel().rows.length)} بلوک
         </span>
 
         <div className="flex items-center gap-3">
@@ -260,8 +271,8 @@ export default function BlocksTable({
           </button>
 
           <span className="text-sm">
-            صفحه {table.state.pagination.pageIndex + 1} از{" "}
-            {Math.max(1, pageCount)}
+            صفحه {toPersianNumber(table.state.pagination.pageIndex + 1)} از{" "}
+            {toPersianNumber(Math.max(1, pageCount))}
           </span>
 
           <button
