@@ -16,7 +16,7 @@
 html {
   font-family: "Vazirmatn";
 }
-span{
+span {
   display: inline-block;
 }
 
@@ -124,4 +124,47 @@ body {
       transform: translateY(100%);
     }
   }
+}.delete::before ,
+.delete::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #ef4444;
+  transform: translateY(101%);
+  transition: transform 0.5s ease-in-out;
+  z-index: -1;
+}
+.delete::before{
+  transition: transform 0.3s ease-out;
+  opacity: 0.4;
+}
+
+.delete:hover::before ,
+.delete:hover::after {
+  transform: translateY(0);
+}
+.blooks_page_scrollbar::-webkit-scrollbar {
+  width: 5px;
+  background-color: #e8e8e811;
+}
+
+.blooks_page_scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.blooks_page_scrollbar::-webkit-scrollbar-thumb {
+  background-color: #005e9d;
+  border-radius: 10px;
+}
+
+/* Chrome, Edge, Safari */
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
+/* Firefox */
+input[type="search"] {
+  appearance: none;
 }
