@@ -14,7 +14,7 @@ export default function LayerManagement() {
   });
   return (
     <aside className="py-3 pl-2 pr-3">
-      <h3 className="border-b border-slate-200/10 text-xs pb-2 block">
+      <h3 className="border-b border-border text-xs pb-2 block">
         مدیریت لایه ها
       </h3>
 
@@ -331,7 +331,7 @@ function Layer<T extends { name: string }>(props: LayerProps<T>) {
 
   return (
     <div
-      className={`feature_items_wrap relative h-fit ${isClose ? "overflow-visible" : "overflow-hidden"} border-b border-slate-200/10 cursor-pointer`}
+      className={`feature_items_wrap relative h-fit ${isClose ? "overflow-visible" : "overflow-hidden"} border-b border-border cursor-pointer`}
     >
       <div
         className="title_feature flex items-center justify-end py-3 gap-2 relative"

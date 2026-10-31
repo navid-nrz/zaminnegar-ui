@@ -1,23 +1,25 @@
-"use client"
+"use client";
 import { AiOutlinePlus } from "react-icons/ai";
 import BlocksTable from "@/app/components/dashboard/blocks/BlocksTable";
 import { useState } from "react";
 import { Dialog } from "@/app/components/Dialog";
 import { IoChevronDown } from "react-icons/io5";
-import { BlockStatus, BlockStatusMap, type Block } from "@/app/components/dashboard/blocks/BlocksTable";
+import {
+  BlockStatus,
+  BlockStatusMap,
+  type Block,
+} from "@/app/components/dashboard/blocks/BlocksTable";
 import { useRouter } from "next/navigation";
 import { mockBlocks } from "@/app/(dashboard)/blocks";
 
-
 export default function BlockPage() {
-
   const [blocks, setBlocks] = useState<Block[]>(mockBlocks);
   const [searchValue, setSearchValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [nameBlock , setNameBlock] = useState('')
-  const [nameRegion , setNameRegion] = useState('')
+  const [nameBlock, setNameBlock] = useState("");
+  const [nameRegion, setNameRegion] = useState("");
   const [valueStatus, setValueStatus] = useState<BlockStatus | "">("");
-  const [alt , setAlt] = useState('')
+  const [alt, setAlt] = useState("");
   const [selectedBlock, setSelectedBlock] = useState<Block | null>(null);
   const router = useRouter();
 
@@ -40,7 +42,7 @@ export default function BlockPage() {
     };
 
     setBlocks((prevBlocks) => [newBlock, ...prevBlocks]);
-console.log("New Block:", blocks);
+    console.log("New Block:", blocks);
     setNameBlock("");
     setNameRegion("");
     setValueStatus("");
@@ -75,8 +77,8 @@ console.log("New Block:", blocks);
               region: nameRegion,
               status: valueStatus,
             }
-          : block
-      )
+          : block,
+      ),
     );
 
     setSelectedBlock(null);
@@ -85,7 +87,7 @@ console.log("New Block:", blocks);
 
   const handleDelete = (block: Block) => {
     setBlocks((prevBlocks) =>
-      prevBlocks.filter((item) => item.code !== block.code)
+      prevBlocks.filter((item) => item.code !== block.code),
     );
   };
   return (
@@ -97,7 +99,7 @@ console.log("New Block:", blocks);
         <div className="block-header w-full flex gap-4 justify-between items-center">
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="flex w-full items-center gap-2 rounded-lg border border-slate-200/10 bg-[#504e4e52]"
+            className="flex w-full items-center gap-2 rounded-lg border border-border bg-[#504e4e52]"
           >
             <label htmlFor="simple-search" className="sr-only">
               جستجو
@@ -181,14 +183,14 @@ console.log("New Block:", blocks);
             onChange={(e) => setNameBlock(e.target.value)}
             type="text"
             placeholder="کد بلوک"
-            className="w-full p-3 rounded-lg bg-slate-700 text-white border-slate-200/10 outline-none"
+            className="w-full p-3 rounded-lg bg-slate-700 text-white border-border outline-none"
           />
           <div className="relative">
             <select
               value={nameRegion}
               onChange={(e) => setNameRegion(e.target.value)}
               name="status"
-              className="w-full p-2.5 rounded-lg bg-slate-700 text-white border-slate-200/10 outline-none appearance-none"
+              className="w-full p-2.5 rounded-lg bg-slate-700 text-white border-border outline-none appearance-none"
             >
               <option value="" disabled>
                 نام منطقه
@@ -206,7 +208,7 @@ console.log("New Block:", blocks);
               value={valueStatus}
               onChange={(e) => setValueStatus(e.target.value as BlockStatus)}
               name="status"
-              className="w-full p-2.5 rounded-lg bg-slate-700 text-white border-slate-200/10 outline-none appearance-none"
+              className="w-full p-2.5 rounded-lg bg-slate-700 text-white border-border outline-none appearance-none"
             >
               <option value="" disabled>
                 وضعیت

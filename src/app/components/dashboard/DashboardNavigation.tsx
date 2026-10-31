@@ -15,23 +15,35 @@ const navigationItems: NavigationItem[] = [
   { label: "نقشه", href: "/map", icon: CiMap },
   { label: "مالکین", href: "/owners", icon: CiUser },
   { label: "مناطق", href: "/regions", icon: PiPolygonLight },
-  { label: "بلوک ها", href: "/blocks", icon: CiGrid42 },
+  { label: "بلوک‌ها", href: "/blocks", icon: CiGrid42 },
   { label: "قطعات", href: "/parcels", icon: CiGrid32 },
 ];
 
 export default function DashboardNavigation() {
   const pathName = usePathname();
   return (
-    <aside className="w-full border-s border-slate-200/10">
+    <aside className="w-full border-s border-border">
       <ul className="flex flex-col gap-1.5 w-full p-2 ">
         {navigationItems.map((item, key) => (
           <Link
             aria-selected={pathName.includes(item.href)}
-            className="flex items-center rounded-lg transition-colors duration-300 ease-in-out justify-between w-full p-3 text-xs aria-selected:bg-blue-500/30 hover:bg-blue-500/10"
+            className={`
+              w-full min-w-11 p-3
+              flex items-center justify-between not-lg:justify-center
+              rounded-lg 
+              transition-colors duration-300 ease-in-out
+              aria-selected:bg-secondary-500
+              aria-selected:text-text-950
+              aria-selected:font-bold
+              hover:bg-secondary-500
+              text-sm 
+              text-text-1 00
+              `}
             key={key}
             href={item.href}
           >
-            {item.label} {<item.icon className="text-lg stroke-[0.2]" />}
+            <span className="not-lg:hidden">{item.label}</span>
+            <item.icon className="text-xl stroke-[0.5] shrink-0 " />
           </Link>
         ))}
       </ul>

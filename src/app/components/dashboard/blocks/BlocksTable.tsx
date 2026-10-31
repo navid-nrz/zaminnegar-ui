@@ -45,7 +45,6 @@ import {
 } from "react-icons/fi";
 import { toPersianNumber } from "@/app/util";
 
-
 interface BlocksTableProps {
   data: Block[];
   searchValue: string;
@@ -60,7 +59,7 @@ const features = tableFeatures({
   rowSortingFeature,
   sortedRowModel: createSortedRowModel(),
   sortFns,
-    columnVisibilityFeature,
+  columnVisibilityFeature,
   columnFilteringFeature,
   filteredRowModel: createFilteredRowModel(),
   filterFns: {
@@ -154,13 +153,13 @@ export default function BlocksTable({
         ),
       },
     ],
-    [onEdit, onDelete]
+    [onEdit, onDelete],
   );
 
   const columnFilters = useMemo(
     () =>
       searchValue.trim() ? [{ id: "code", value: searchValue.trim() }] : [],
-    [searchValue]
+    [searchValue],
   );
 
   const table = useTable({
@@ -184,7 +183,7 @@ export default function BlocksTable({
 
   return (
     <div className="w-full space-y-4">
-      <div className="overflow-x-auto rounded-lg border border-slate-200/10">
+      <div className="overflow-x-auto rounded-lg border border-border">
         <table className="w-full text-left text-sm">
           <thead className="bg-slate-200/10">
             {table.getHeaderGroups().map((group) => (
@@ -244,7 +243,7 @@ export default function BlocksTable({
                   }}
                   tabIndex={0}
                   aria-label={`Open block ${row.original.code}`}
-                  className="cursor-pointer border-t border-slate-200/10 hover:bg-slate-800 odd:bg-slate-950 focus-visible:outline-2 focus-visible:outline-blue-500 transition duration-300"
+                  className="cursor-pointer border-t border-border hover:bg-slate-800 odd:bg-slate-950 focus-visible:outline-2 focus-visible:outline-blue-500 transition duration-300"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td key={cell.id} className="px-4 py-3 text-right">

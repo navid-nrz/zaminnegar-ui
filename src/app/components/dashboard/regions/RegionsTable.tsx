@@ -12,7 +12,6 @@ import {
   columnVisibilityFeature,
   sortFns,
   type ColumnDef,
-  createColumnHelper,
 } from "@tanstack/react-table";
 
 import {
@@ -209,7 +208,7 @@ export default function RegionsTable({
 
   return (
     <div className="w-full space-y-4">
-      <div className="overflow-x-auto rounded-lg border border-slate-200/10">
+      <div className="overflow-x-auto rounded-lg border border-border">
         <table className="w-full text-left text-sm">
           <thead className="bg-slate-200/10">
             {table.getHeaderGroups().map((group) => (
@@ -269,7 +268,7 @@ export default function RegionsTable({
                   }}
                   tabIndex={0}
                   aria-label={`Open block ${row.original.name}`}
-                  className="border-t border-slate-200/10 hover:bg-slate-800 odd:bg-slate-950 focus-visible:outline-2 focus-visible:outline-blue-500"
+                  className="border-t border-border hover:bg-slate-800 odd:bg-slate-950 focus-visible:outline-2 focus-visible:outline-blue-500"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td key={cell.id} className="px-4 py-3 text-right">

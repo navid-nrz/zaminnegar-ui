@@ -177,7 +177,7 @@ export default function SelectedParcelsOwnersTable({
   const rows = table.getRowModel().rows;
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-slate-200/10 col-span-8">
+    <div className="overflow-x-auto rounded-lg border border-border col-span-8">
       <div className="max-h-36.5 overflow-y-auto scrollbar-gutter-stable">
         <div
           className="grid sticky top-0 z-10 bg-(--primary-color) text-left text-xs border-b border-b-slate-200/10"
@@ -231,7 +231,7 @@ export default function SelectedParcelsOwnersTable({
                 }}
                 tabIndex={0}
                 aria-label={`Open block ${row.original.parcel.name}`}
-                className="grid cursor-pointer border-t border-slate-200/10 hover:bg-slate-800 odd:bg-slate-950 focus-visible:outline-2 focus-visible:outline-blue-500 transition duration-300"
+                className="grid cursor-pointer border-t border-border hover:bg-slate-800 odd:bg-slate-950 focus-visible:outline-2 focus-visible:outline-blue-500 transition duration-300"
                 style={{
                   gridTemplateColumns: `repeat(${columns.length}, minmax(max-content, 1fr))`,
                 }}

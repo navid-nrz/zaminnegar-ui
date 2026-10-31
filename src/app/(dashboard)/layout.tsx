@@ -1,5 +1,5 @@
 import DashboardNavigation from "../components/dashboard/DashboardNavigation";
-import Header from "../components/dashboard/header";
+import DashboardHeader from "../components/dashboard/DashboardHeader";
 
 export default function DashboardLayout({
   children,
@@ -9,10 +9,10 @@ export default function DashboardLayout({
   return (
     <div className="max-h-svh h-full grid grid-rows-[auto_1fr] grid-cols-12">
       <div className="col-span-12">
-      <Header />
+        <DashboardHeader />
       </div>
-        <main className="col-span-11 h-full overflow-y-auto">{children}</main>
-        <DashboardNavigation />
+      <main className="col-span-11 h-full overflow-y-auto">{children}</main>
+      <DashboardNavigation />
     </div>
   );
 }

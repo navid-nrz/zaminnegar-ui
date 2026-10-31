@@ -20,7 +20,7 @@ export default function RegionsPage() {
         <div className="block-header w-full flex gap-4 justify-between items-center">
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="flex w-full items-center gap-2 rounded-lg border border-slate-200/10 bg-[#504e4e52]"
+            className="flex w-full items-center gap-2 rounded-lg border border-border bg-[#504e4e52]"
           >
             <label htmlFor="simple-search" className="sr-only">
               جست و جو منطقه
@@ -47,7 +47,7 @@ export default function RegionsPage() {
           </form>
           <button
             onClick={() => setIsAddingRegion(true)}
-            className="min-w-fit flex gap-2 items-center bg-blue-500 hover:bg-blue-600 transition duration-300 py-2.5 px-4 rounded-lg cursor-pointer"
+            className="min-w-fit flex gap-2 items-center bg-info-500 transition duration-300 py-2.5 px-4 rounded-lg cursor-pointer"
           >
             <AiOutlinePlus />
             <span className="text-sm">افزودن منطقه</span>

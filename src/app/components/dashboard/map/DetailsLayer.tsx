@@ -13,39 +13,38 @@ const owners = [
   { id: 4, name: "مهدی لطفی", count: 2 },
 ];
 
-
 export default function DetailsLayer() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const filteredOwners = owners.filter((owner) =>
-    owner.name.toLowerCase().includes(searchValue.trim().toLowerCase())
+    owner.name.toLowerCase().includes(searchValue.trim().toLowerCase()),
   );
-  
+
   return (
     <aside className="h-full min-h-0 min-w-0 flex-1 py-3 pl-2 pr-3 ">
-      <h3 className="border-b border-slate-200/10 text-xs pb-2 block">
+      <h3 className="border-b border-border text-xs pb-2 block">
         جزئیات منطقه
       </h3>
       <div className="details_polygon relative">
-        <div className="abs-plyg absolute top-0.5 left-0 w-30 h-30 rounded-xl bg-blue-500/10 backdrop-blur-lg border border-slate-200/10"></div>
+        <div className="abs-plyg absolute top-0.5 left-0 w-30 h-30 rounded-xl bg-blue-500/10 backdrop-blur-lg border border-border"></div>
         <h3 className="text-xs pb-2 mt-3 flex items-center gap-1">
           <PolygonIcon fillColor="#7eff1d" />
           <span>منطقه - شمال</span>
         </h3>
         <ul>
-          <li className="flex flex-col gap-1 py-2.5 border-b border-slate-200/10">
+          <li className="flex flex-col gap-1 py-2.5 border-b border-border">
             <span className="title text-xs">کد‌منطقه</span>
             <span className="desc text-xs font-normal text-slate-400">
               R_001
             </span>
           </li>
-          <li className="flex flex-col gap-1 py-2.5 border-b border-slate-200/10">
+          <li className="flex flex-col gap-1 py-2.5 border-b border-border">
             <span className="title text-xs">مساحت</span>
             <span className="desc text-xs font-normal text-slate-400">
               125.4 هکتار
             </span>
           </li>
-          <li className="flex flex-col gap-1 py-2.5 border-b border-slate-200/10">
+          <li className="flex flex-col gap-1 py-2.5 border-b border-border">
             <span className="title text-xs">تعداد بلوک‌ها</span>
             <span className="desc text-xs font-normal text-slate-400">3</span>
           </li>
@@ -55,13 +54,13 @@ export default function DetailsLayer() {
           </li>
         </ul>
         <div className="buttons_wrapper flex justify-between items-center mt-2 gap-2">
-          <button className="delete relative overflow-hidden cursor-pointer flex gap-1.5 py-2.5 items-center rounded-md justify-center w-full border border-slate-200/10">
+          <button className="delete relative overflow-hidden cursor-pointer flex gap-1.5 py-2.5 items-center rounded-md justify-center w-full border border-border">
             <IoTrashOutline />
             <span className="text-xs font-medium">حذف منطقه</span>
           </button>
           <button
             style={{ "--color-plyg": "#7eff1d" } as React.CSSProperties}
-            className="patch cursor-pointer flex transition-bg duration-300 bg-(--color-plyg) hover:bg-[color-mix(in_srgb,var(--color-plyg),black_20%)] gap-1.5 py-2.5 items-center rounded-md justify-center w-full border border-slate-200/10"
+            className="patch cursor-pointer flex transition-bg duration-300 bg-(--color-plyg) hover:bg-[color-mix(in_srgb,var(--color-plyg),black_20%)] gap-1.5 py-2.5 items-center rounded-md justify-center w-full border border-border"
           >
             <HiOutlinePencil stroke="#020d20" />
             <span className="text-xs text-[#020d20] font-bold">
@@ -70,7 +69,7 @@ export default function DetailsLayer() {
           </button>
         </div>
       </div>
-      <div className="details_blooks_polygon border border-slate-200/10 rounded-xl mt-3 p-1.5 overflow-hidden relative">
+      <div className="details_blooks_polygon border border-border rounded-xl mt-3 p-1.5 overflow-hidden relative">
         <h3
           onClick={() => setIsOpen(!isOpen)}
           className="text-xs px-1.5 py-2 flex items-center justify-between cursor-pointer"
@@ -99,7 +98,7 @@ export default function DetailsLayer() {
                 </div>
               </div>
               <div className="plyg">
-                <div className="w-12 h-12 border border-slate-200/10 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 border border-border rounded-lg flex items-center justify-center">
                   <PolygonIcon width="28px" fillColor="#2b7fff" />
                 </div>
               </div>
@@ -118,7 +117,7 @@ export default function DetailsLayer() {
                 </div>
               </div>
               <div className="plyg">
-                <div className="w-12 h-12 border border-slate-200/10 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 border border-border rounded-lg flex items-center justify-center">
                   <PolygonIcon width="28px" fillColor="#2b7fff" />
                 </div>
               </div>
@@ -137,7 +136,7 @@ export default function DetailsLayer() {
                 </div>
               </div>
               <div className="plyg">
-                <div className="w-12 h-12 border border-slate-200/10 rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 border border-border rounded-lg flex items-center justify-center">
                   <PolygonIcon width="28px" fillColor="#2b7fff" />
                 </div>
               </div>
@@ -145,11 +144,11 @@ export default function DetailsLayer() {
           </div>
         </div>
       </div>
-      <div className="details_users border border-slate-200/10 rounded-xl mt-3 p-1.5">
+      <div className="details_users border border-border rounded-xl mt-3 p-1.5">
         <div className="block-header w-full flex gap-2 justify-between items-center">
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="flex w-full items-center gap-2 rounded-lg border border-slate-200/10 bg-[#504e4e52]"
+            className="flex w-full items-center gap-2 rounded-lg border border-border bg-[#504e4e52]"
           >
             <label htmlFor="simple-search" className="sr-only">
               جستجو
@@ -193,7 +192,7 @@ export default function DetailsLayer() {
           {filteredOwners.map((owner) => (
             <div
               key={owner.id}
-              className="owner_item flex items-center py-3 border-b last:border-b-0 border-slate-200/10 justify-between px-1"
+              className="owner_item flex items-center py-3 border-b last:border-b-0 border-border justify-between px-1"
             >
               <div className="name_and_circle flex items-center gap-2">
                 <span className="circle w-2 h-2 rounded-full bg-[#5e00d9]"></span>
