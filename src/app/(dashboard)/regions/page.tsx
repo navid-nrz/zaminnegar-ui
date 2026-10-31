@@ -1,0 +1,97 @@
+'use client'
+
+import { AddRegionDialog } from "@/app/components/dashboard/regions/AddRegionDialog";
+import RegionsTable, { RegionStatus } from "@/app/components/dashboard/regions/RegionsTable";
+import { useState } from "react";
+import { AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
+
+export default function RegionsPage() {
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [searchValue, setSearchValue] = useState("");
+      const [isAddingRegion, setIsAddingRegion] = useState(false)
+  return (
+    <div className="w-full h-full overflow-y-auto">
+      <div className="w-full max-w-4xl mx-auto flex flex-col gap-4 items-center pb-4 pt-6 pr-4">
+        <h2 className="w-full text-right text-3xl leading-loose font-normal">
+          منطقه ها
+        </h2>
+        <div className="block-header w-full flex gap-4 justify-between items-center">
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className="flex w-full items-center gap-2 rounded-lg border border-slate-200/10 bg-[#504e4e52]"
+          >
+            <label htmlFor="simple-search" className="sr-only">
+             جست و جو منطقه
+            </label>
+
+            <search className="min-w-0 w-full flex-1">
+              <input
+                type="search"
+                id="simple-search"
+                placeholder="جست و جوی منطقه..."
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                className="block w-full py-2.5 px-3 text-sm text-slate-200 outline-none transition placeholder:text-slate-300"
+              />
+            </search>
+
+            <button
+              type="submit"
+              aria-label="جستجو"
+              className="flex h-10 w-10 shrink-0 items-center justify-center text-white transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500/30 cursor-pointer"
+            >
+              <AiOutlineSearch />
+            </button>
+          </form>
+          <button onClick={()=>setIsAddingRegion(true)} className="min-w-fit flex gap-2 items-center bg-blue-500 hover:bg-blue-600 transition duration-300 py-2.5 px-4 rounded-lg cursor-pointer">
+            <AiOutlinePlus />
+            <span className="text-sm">افزودن منطقه</span>
+          </button>
+        </div>
+        <RegionsTable
+          data={[{id: 'sdfsdf',createdAt: new Date(), updatedAt: new Date(), description: 'i dont have any', name: 'TOROQ', status:RegionStatus.ACTIVE, territory: {
+  type: 'MultiPolygon',
+  coordinates: [
+    // Polygon 1 (with a hole)
+    [
+      // Outer ring
+      [
+        [13.4000, 52.5200],
+        [13.4100, 52.5200],
+        [13.4100, 52.5300],
+        [13.4000, 52.5300],
+        [13.4000, 52.5200],
+      ],
+      // Inner ring (hole)
+      [
+        [13.4030, 52.5230],
+        [13.4070, 52.5230],
+        [13.4070, 52.5270],
+        [13.4030, 52.5270],
+        [13.4030, 52.5230],
+      ],
+    ],
+
+    // Polygon 2 (separate island/field)
+    [
+      [
+        [13.4150, 52.5200],
+        [13.4250, 52.5200],
+        [13.4250, 52.5300],
+        [13.4150, 52.5300],
+        [13.4150, 52.5200],
+      ],
+    ],
+  ],
+},areaM2: '10222450.45'}]}
+          onDelete={console.log}
+          onEdit={console.log}
+          onRowClick={console.log}
+          searchValue={searchValue}
+        />
+        <AddRegionDialog open={isAddingRegion} onOpenChange={(open)=>setIsAddingRegion(open)} />
+      </div>
+    </div>
+  );
+}
